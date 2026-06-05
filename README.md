@@ -18,17 +18,22 @@
 ### Simple
 
 ```
-docker run -v /path/to/site:/srv dockette/apache
+docker run --rm -p 8080:80 -v /path/to/site:/srv dockette/apache
 ```
+
+This mirrors `make run`: it publishes Apache on <http://localhost:8080> and mounts your site files to `/srv`. The image removes Debian's default site, so mount an Apache vhost when you need Apache to serve `/srv`.
 
 ### Sites
 
 ```
 docker run \
+	-p 8080:80 \
 	-v /path/to/site:/srv \
-	-v mysite.conf:/etc/apache2/sites-enabled/mysite.conf
+	-v /path/to/mysite.conf:/etc/apache2/sites-enabled/mysite.conf \
 	dockette/apache
 ```
+
+Use a real host path for `mysite.conf`; the container path enables that vhost inside Apache.
 
 ## Legacy Constraints
 
